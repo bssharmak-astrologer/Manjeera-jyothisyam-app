@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#7C2D3B">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="మంజీర జ్యోతిష్యాలయం">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+<title>శ్రీ మంజీర జ్యోతిష్యాలయం | Sri Manjeera Jyothishyalayam</title>
+<style>
+  :root{
+    --maroon:#7C2D3B; --maroon-dark:#5A1F2A; --gold:#B8862F; --gold-light:#D9B45C;
+    --cream:#FAF3E6; --cream-deep:#F1E6D2; --ink:#3A2618; --ink-soft:#6B5847; --line:#E3D4B8;
+    font-family: "Noto Sans Telugu","Nirmala UI","Gautami","Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #FFFBF3 0%, transparent 60%),
+      radial-gradient(1000px 600px at 110% 10%, #FFF6E6 0%, transparent 55%),
+      var(--cream);
+    color:var(--ink); min-height:100vh; padding:28px 16px 60px;
+  }
+  .wrap{max-width:880px;margin:0 auto;}
+
+  .letterhead-row{display:flex; align-items:center; justify-content:center; gap:16px; max-width:680px; margin:0 auto;}
+  .deity-avatar{width:64px;height:64px; border-radius:50%; object-fit:cover; object-position:top center; border:3px solid var(--gold); box-shadow:0 2px 10px rgba(122,46,46,0.25); flex-shrink:0;}
+  .letterhead{text-align:center; flex:1; min-width:0;}
+  .letterhead .inst-te{font-size:25px; font-weight:800; color:var(--maroon-dark); letter-spacing:0.3px; line-height:1.25;}
+  .letterhead .place{font-size:13.5px; color:var(--ink-soft); margin-top:2px;}
+  .letterhead .proprietor{margin-top:10px; font-size:14.5px; color:var(--ink); font-weight:700;}
+  .letterhead-rule{height:1px; width:100%; max-width:520px; margin:16px auto 0; background:linear-gradient(90deg, transparent, var(--line), transparent);}
+  @media (max-width:520px){ .deity-avatar{width:50px;height:50px;} .letterhead-row{gap:10px;} }
+
+  header.top{text-align:center;margin-bottom:26px;}
+  .badge{display:block; width:50px; height:50px; margin:18px auto 8px; border-radius:12px;}
+  h1{font-size:27px; margin:0 0 4px; color:var(--maroon-dark); letter-spacing:0.2px;}
+  h1 .en{display:block; font-size:13px; font-weight:600; color:var(--ink-soft); letter-spacing:1.3px; text-transform:uppercase; margin-top:6px;}
+  .sub{color:var(--ink-soft); font-size:14px; max-width:560px; margin:10px auto 0; line-height:1.5;}
+  .rule{height:3px; width:120px; margin:18px auto 0; background:linear-gradient(90deg, transparent, var(--gold), transparent); border-radius:3px;}
+
+  /* home nav cards */
+  .nav-row{display:flex; gap:18px; justify-content:center; margin:34px 0 8px; flex-wrap:wrap;}
+  .nav-card{
+    flex:1; min-width:220px; max-width:320px; background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:26px 20px; cursor:pointer; text-align:center; transition:all .15s ease;
+    box-shadow:0 2px 14px rgba(122,46,46,0.06); position:relative; overflow:hidden;
+  }
+  .nav-card::before{content:""; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--gold) 0%, var(--maroon) 100%);}
+  .nav-card:hover{transform:translateY(-2px); box-shadow:0 8px 22px rgba(122,46,46,0.14);}
+  .nav-card img{width:56px; height:56px; margin:4px auto 14px; display:block;}
+  .nav-card .te{font-size:19px; font-weight:800; color:var(--maroon-dark);}
+  .nav-card .en{display:block; font-size:11.5px; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:1px; margin-top:4px;}
+  .nav-card .desc{font-size:12.5px; color:var(--ink-soft); margin-top:10px; line-height:1.5;}
+
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px; cursor:pointer; color:var(--maroon-dark);
+    font-weight:700; font-size:14px; margin-bottom:18px; user-select:none;
+  }
+  .back-link:hover{text-decoration:underline;}
+
+  /* shared form bits */
+  .panels{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:30px;}
+  @media (max-width:640px){ .panels{grid-template-columns:1fr;} }
+  .card{background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px 20px 24px; box-shadow:0 2px 10px rgba(122,46,46,0.05); position:relative; overflow:hidden;}
+  .card::before{content:""; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--gold) 0%, var(--maroon) 100%);}
+  .card h2{margin:6px 0 18px; font-size:19px; color:var(--maroon-dark); display:flex; align-items:baseline; gap:8px;}
+  .card h2 .en{font-size:12px;color:var(--ink-soft);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+  label{display:block; font-size:13px; color:var(--ink-soft); margin:14px 0 6px; font-weight:600;}
+  label .en{font-weight:500;color:#9c8a76;}
+  select, .search-box, .manual-input{
+    width:100%; padding:11px 12px; border-radius:9px; border:1.5px solid var(--line);
+    background:#FFFDF9; font-size:16px; color:var(--ink); font-family:inherit;
+  }
+  select{
+    appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%237C2D3B' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:36px;
+  }
+  select:focus, .search-box:focus, .manual-input:focus{outline:3px solid #D9B45C66; outline-offset:1px; border-color:var(--gold);}
+
+  .actions{text-align:center; margin:30px 0 6px;}
+  button.primary-btn{
+    background:linear-gradient(180deg, var(--maroon) 0%, var(--maroon-dark) 100%); color:#fff; border:none;
+    padding:15px 38px; border-radius:999px; font-size:17px; font-weight:700; letter-spacing:0.3px; cursor:pointer;
+    box-shadow:0 6px 18px rgba(90,31,42,0.30); transition:transform .12s ease, box-shadow .12s ease;
+  }
+  button.primary-btn:hover{transform:translateY(-1px); box-shadow:0 9px 22px rgba(90,31,42,0.36);}
+  button.primary-btn:active{transform:translateY(0px) scale(0.99);}
+  button.primary-btn .en{display:block;font-size:11px;font-weight:600;opacity:0.85;letter-spacing:1.2px;text-transform:uppercase;margin-top:2px;}
+
+  .result-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; box-shadow:0 4px 20px rgba(122,46,46,0.08); animation:rise .35s ease both;}
+  @keyframes rise{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  .note{margin-top:18px; font-size:12.5px; color:#9c8a76; text-align:center; line-height:1.5;}
+  footer{text-align:center; margin-top:40px; font-size:12px; color:#b3a48d;}
+  .hidden{display:none !important;}
+  .error-box{margin-top:18px; background:#FBEDE8; border:1px solid #E7B9A8; color:#A8492F; padding:12px 16px; border-radius:10px; font-size:14px; text-align:center;}
+
+  /* ---- porutham specific ---- */
+  .score-row{display:flex; align-items:center; gap:22px; justify-content:center; flex-wrap:wrap; padding-bottom:22px; border-bottom:1px dashed var(--line); margin-bottom:20px;}
+  .ring-wrap{position:relative; width:140px; height:140px;}
+  .ring-wrap svg{transform:rotate(-90deg);}
+  .ring-bg{fill:none; stroke:#F1E6D2; stroke-width:11;}
+  .ring-fg{fill:none; stroke:url(#ringGrad); stroke-width:11; stroke-linecap:round; transition:stroke-dashoffset 0.9s cubic-bezier(.4,0,.2,1);}
+  .ring-label{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+  .ring-label .num{font-size:34px; font-weight:800; color:var(--maroon-dark); line-height:1;}
+  .ring-label .den{font-size:13px; color:var(--ink-soft); margin-top:2px;}
+  .score-text{max-width:280px;}
+  .score-text .te{font-size:18px; font-weight:700; color:var(--maroon-dark); margin-bottom:4px;}
+  .score-text .en{font-size:13px; color:var(--ink-soft);}
+  .pair{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:640px){ .pair{grid-template-columns:1fr;} }
+  .person{background:var(--cream); border:1px solid var(--line); border-radius:12px; padding:16px 16px 14px;}
+  .person .role{font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--gold); margin-bottom:6px;}
+  .person .nak{font-size:17px; font-weight:700; color:var(--maroon-dark);}
+  .person .nak .en{display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-top:1px;}
+  .attr-grid{margin-top:12px; display:grid; grid-template-columns:auto 1fr; row-gap:7px; column-gap:10px; font-size:14px;}
+  .attr-grid dt{color:var(--ink-soft); font-weight:600;}
+  .attr-grid dd{margin:0; font-weight:700; color:var(--ink);}
+  .attr-grid dd .en{font-weight:500; color:#9c8a76; font-size:12.5px;}
+
+  /* ---- garba specific ---- */
+  .mode-row{display:flex; gap:14px; justify-content:center; margin:30px 0 8px; flex-wrap:wrap;}
+  .mode-btn{flex:1; min-width:150px; max-width:260px; background:#fff; border:2px solid var(--line); border-radius:14px; padding:18px 16px; cursor:pointer; text-align:center; transition:all .15s ease; box-shadow:0 2px 10px rgba(122,46,46,0.05);}
+  .mode-btn:hover{border-color:var(--gold-light); transform:translateY(-1px);}
+  .mode-btn.active{border-color:var(--maroon); background:linear-gradient(180deg,#fff 0%, var(--cream-deep) 100%); box-shadow:0 4px 16px rgba(122,46,46,0.18);}
+  .mode-btn .te{font-size:18px; font-weight:800; color:var(--maroon-dark);}
+  .mode-btn .en{display:block; font-size:11px; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:1px; margin-top:3px;}
+  .picker-card{background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px; margin-top:22px; display:none; box-shadow:0 2px 14px rgba(122,46,46,0.06);}
+  .picker-card.show{display:block;}
+  .picker-card h3{margin:0 0 12px; font-size:16px; color:var(--maroon-dark);}
+  .picker-card h3 .en{display:block; font-size:11px; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:1px; margin-top:2px;}
+  .picker-list{max-height:260px; overflow-y:auto; border:1px solid var(--line); border-radius:10px; background:var(--cream); margin-bottom:18px;}
+  .picker-item{padding:11px 14px; cursor:pointer; border-bottom:1px solid var(--line); font-size:15px; font-weight:700; color:var(--ink);}
+  .picker-item:last-child{border-bottom:none;}
+  .picker-item:hover{background:var(--cream-deep);}
+  .picker-item.selected{background:var(--maroon); color:#fff;}
+  .picker-empty{padding:16px; text-align:center; color:var(--ink-soft); font-size:14px;}
+  .manual-row{display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; border-top:1px dashed var(--line); padding-top:16px; margin-top:4px;}
+  .manual-row .field{flex:1; min-width:160px;}
+  .manual-row button{
+    background:var(--maroon); color:#fff; border:none; padding:11px 20px; border-radius:9px;
+    font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap;
+  }
+  .manual-row button:hover{background:var(--maroon-dark);}
+  .manual-hint{font-size:11.5px; color:#9c8a76; margin-top:6px;}
+
+  #result{margin-top:24px; display:none;}
+  .result-head{text-align:center; margin-bottom:18px; padding-bottom:14px; border-bottom:1px dashed var(--line);}
+  .result-head .te{font-size:17px; font-weight:700; color:var(--maroon-dark);}
+  .result-head .en{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  .result-grid{display:flex; flex-direction:column;}
+  .result-row{
+    display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+    padding:13px 4px; border-bottom:1px solid var(--line);
+  }
+  .result-row:last-child{border-bottom:none;}
+  .result-row .label{font-size:14.5px; font-weight:700; color:var(--gold); letter-spacing:0.2px; flex-shrink:0;}
+  .result-row .value{font-size:16.5px; font-weight:700; color:var(--ink); text-align:right;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="letterhead-row">
+    <img class="deity-avatar" src="images/ganapathi.jpg" alt="Sri Ganapathi">
+    <div class="letterhead">
+      <div class="inst-te">శ్రీ మంజీర జ్యోతిష్యాలయం</div>
+      <div class="place">పిఠాపురం</div>
+      <div class="proprietor">Dr.K.R.K. పరమహంస</div>
+    </div>
+    <img class="deity-avatar" src="images/dattatreya.jpg" alt="Sri Dattatreya">
+  </div>
+  <div class="letterhead-rule"></div>
+
+  <!-- ============ HOME SCREEN ============ -->
+  <div id="screenHome">
+    <header class="top">
+      <h1>జ్యోతిష సాధనాలు<span class="en">Jyotisha Tools</span></h1>
+      <p class="sub">కింద ఇవ్వబడిన సాధనాల్లో ఒకటి ఎంచుకోండి.<br>Choose one of the tools below.</p>
+      <div class="rule"></div>
+    </header>
+
+    <div class="nav-row">
+      <div class="nav-card" onclick="goTo('porutham')">
+        <img src="images/hands-badge.png" alt="">
+        <div class="te">నక్షత్ర పొంతన</div>
+        <div class="en">Nakshatra Porutham</div>
+        <div class="desc">వధూవరుల నక్షత్ర పొంతన పాయింట్లు లెక్కించండి.<br>Marriage compatibility scoring.</div>
+      </div>
+      <div class="nav-card" onclick="goTo('garba')">
+        <img src="images/mandala-badge.png" alt="">
+        <div class="te">పద గణితం</div>
+        <div class="en">Garba Ganitham</div>
+        <div class="desc">గృహ నిర్మాణ క్షేత్ర పద గణన.<br>Vastu site calculation for construction.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ POROTHAM SCREEN ============ -->
+  <div id="screenPorutham" class="hidden">
+    <span class="back-link" onclick="goTo('home')">&larr; <span>ముఖ్య పేజీ &middot; Home</span></span>
+    <header class="top">
+      <img class="badge" src="images/hands-badge.png" alt="">
+      <h1>నక్షత్ర పొంతన లెక్కింపు<span class="en">Nakshatra Porutham &middot; Marriage Compatibility</span></h1>
+      <p class="sub">వరుడు మరియు వధువు నక్షత్రం &amp; పాదం ఎంచుకొని పొంతన పాయింట్లు చూడండి.<br>
+      Select the groom's and bride's nakshatram &amp; padam to view the compatibility points.</p>
+      <div class="rule"></div>
+    </header>
+
+    <div class="panels">
+      <div class="card">
+        <h2>వరుడు <span class="en">Groom</span></h2>
+        <label>నక్షత్రం <span class="en">(Nakshatram)</span></label>
+        <select id="groomNak"></select>
+        <label>పాదం <span class="en">(Padam)</span></label>
+        <select id="groomPada"></select>
+      </div>
+      <div class="card">
+        <h2>వధువు <span class="en">Bride</span></h2>
+        <label>నక్షత్రం <span class="en">(Nakshatram)</span></label>
+        <select id="brideNak"></select>
+        <label>పాదం <span class="en">(Padam)</span></label>
+        <select id="bridePada"></select>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="primary-btn" id="go">పొంతన చూడండి<span class="en">Check Compatibility</span></button>
+    </div>
+
+    <div id="errorBox" class="error-box hidden"></div>
+
+    <div id="result">
+      <div class="result-card">
+        <div class="score-row">
+          <div class="ring-wrap">
+            <svg width="140" height="140" viewBox="0 0 140 140">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#D9B45C"/>
+                  <stop offset="100%" stop-color="#7C2D3B"/>
+                </linearGradient>
+              </defs>
+              <circle class="ring-bg" cx="70" cy="70" r="58"/>
+              <circle class="ring-fg" id="ringFg" cx="70" cy="70" r="58" stroke-dasharray="364.4" stroke-dashoffset="364.4"/>
+            </svg>
+            <div class="ring-label">
+              <div class="num" id="scoreNum">0</div>
+              <div class="den">/ 36</div>
+            </div>
+          </div>
+          <div class="score-text">
+            <div class="te">మొత్తం పొంతన పాయింట్లు</div>
+            <div class="en">Total compatibility points out of the 36-point (Ashtakoota) system.</div>
+          </div>
+        </div>
+
+        <div class="pair">
+          <div class="person">
+            <div class="role">వరుడు &middot; Groom</div>
+            <div class="nak" id="rGroomNak"></div>
+            <dl class="attr-grid">
+              <dt>జంతువు <span class="en">Animal</span></dt><dd id="rGroomAnimal"></dd>
+              <dt>గణం <span class="en">Ganam</span></dt><dd id="rGroomGanam"></dd>
+              <dt>నాడి <span class="en">Nadi</span></dt><dd id="rGroomNadi"></dd>
+            </dl>
+          </div>
+          <div class="person">
+            <div class="role">వధువు &middot; Bride</div>
+            <div class="nak" id="rBrideNak"></div>
+            <dl class="attr-grid">
+              <dt>జంతువు <span class="en">Animal</span></dt><dd id="rBrideAnimal"></dd>
+              <dt>గణం <span class="en">Ganam</span></dt><dd id="rBrideGanam"></dd>
+              <dt>నాడి <span class="en">Nadi</span></dt><dd id="rBrideNadi"></dd>
+            </dl>
+          </div>
+        </div>
+
+        <p class="note">ఈ స్కోరు సంప్రదాయ అష్టకూట పట్టిక ఆధారంగా లెక్కించబడింది. తుది నిర్ణయం కోసం దయచేసి అనుభవజ్ఞులైన పురోహితులు/జ్యోతిష్కులను సంప్రదించండి.<br>
+        This score is calculated from the traditional Ashtakoota table provided. Please consult an experienced priest/astrologer for a final decision.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ GARBA SCREEN ============ -->
+  <div id="screenGarba" class="hidden">
+    <span class="back-link" onclick="goTo('home')">&larr; <span>ముఖ్య పేజీ &middot; Home</span></span>
+    <header class="top">
+      <img class="badge" src="images/mandala-badge.png" alt="">
+      <h1>పద గణితం లెక్కింపు<span class="en">Garba Ganitham &middot; Vastu Site Calculation</span></h1>
+      <p class="sub">పూర్వక గణితం లేదా బైనాంక గణితం ఎంచుకొని, క్షేత్ర పదమును ఎన్నుకోండి.<br>
+      Choose Purvaka or Binanka Ganitham, then select the Kshetra Padam to view all results.</p>
+      <div class="rule"></div>
+    </header>
+
+    <div class="mode-row">
+      <div class="mode-btn" id="btnPurvakam" onclick="selectMode('purvakam')">
+        <div class="te">పూర్వక గణితం</div>
+        <div class="en">Purvaka Ganitham</div>
+      </div>
+      <div class="mode-btn" id="btnBinanakam" onclick="selectMode('binanakam')">
+        <div class="te">బైనాంక గణితం</div>
+        <div class="en">Binanka Ganitham</div>
+      </div>
+    </div>
+
+    <div class="picker-card" id="pickerCard">
+      <h3 id="pickerTitle">పదము ఎంచుకోండి<span class="en">Select Padam</span></h3>
+      <input type="text" inputmode="numeric" class="search-box" id="searchBox" placeholder="పదము టైప్ చేయండి... (Type padam to filter)">
+      <div class="picker-list" id="pickerList"></div>
+
+      <div class="manual-row">
+        <div class="field">
+          <label style="margin-top:0;">మీ స్వంత పదము నమోదు చేయండి <span class="en">(Enter your own padam)</span></label>
+          <input type="text" class="manual-input" id="manualInput" placeholder="ఉదా: 145 (or 22.25 for Binanakam)">
+        </div>
+        <button onclick="useManualPadam()">గణించు<br><span style="font-weight:600;font-size:11px;">Calculate</span></button>
+      </div>
+      <div class="manual-hint">జాబితాలో లేని ఏ పదానికైనా ఫలితాలు చూడవచ్చు. &middot; Works for any padam, even if it's not in the list above.</div>
+    </div>
+
+    <div id="resultGarba" class="hidden">
+      <div class="result-card">
+        <div class="result-head">
+          <div class="te" id="resultTitle"></div>
+          <div class="en" id="resultSubtitle"></div>
+        </div>
+        <div class="result-grid" id="resultGrid"></div>
+        <p class="note">ఈ ఫలితాలు సూచించిన సూత్రాల ఆధారంగా లెక్కించబడ్డాయి. తుది నిర్ణయం కోసం దయచేసి అనుభవజ్ఞులైన శాస్త్రజ్ఞులను సంప్రదించండి.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>శ్రీ మంజీర జ్యోతిష్యాలయం &middot; Digital Tools</footer>
+</div>
+
+<script>
+const POROTHAM_DATA = {"units": [{"name": "అశ్విని", "padams": [1, 2, 3, 4], "animal": "గుర్రం", "ganam": "దేవ", "nadi": "ఆది", "raw": "అశ్విని"}, {"name": "భరణి", "padams": [1, 2, 3, 4], "animal": "ఏనుగు", "ganam": "మనుష్య", "nadi": "మధ్య", "raw": "భరణి"}, {"name": "కృత్తిక", "padams": [1], "animal": "మేక", "ganam": "రాక్షస", "nadi": "అంత్య", "raw": "కృత్తిక 1"}, {"name": "కృత్తిక", "padams": [2, 3, 4], "animal": "మేక", "ganam": "రాక్షస", "nadi": "అంత్య", "raw": "కృత్తిక 2,3,4"}, {"name": "రోహిణి", "padams": [1, 2, 3, 4], "animal": "పాము", "ganam": "మనుష్య", "nadi": "అంత్య", "raw": "రోహిణి"}, {"name": "మృగశిర", "padams": [1, 2], "animal": "పాము", "ganam": "దేవ", "nadi": "మధ్య", "raw": "మృగశిర 1, 2"}, {"name": "మృగశిర", "padams": [3, 4], "animal": "పాము", "ganam": "దేవ", "nadi": "మధ్య", "raw": "మృగశిర 3,4"}, {"name": "ఆరుద్ర", "padams": [1, 2, 3, 4], "animal": "కుక్క", "ganam": "మనుష్య", "nadi": "ఆది", "raw": "ఆరుద్ర"}, {"name": "పునర్వసు", "padams": [1, 2, 3], "animal": "పిల్లి", "ganam": "దేవ", "nadi": "ఆది", "raw": "పునర్వసు1.2.3"}, {"name": "పునర్వసు", "padams": [4], "animal": "పిల్లి", "ganam": "దేవ", "nadi": "ఆది", "raw": "పునర్వసు 4"}, {"name": "పుష్యమి", "padams": [1, 2, 3, 4], "animal": "మేక", "ganam": "దేవ", "nadi": "మధ్య", "raw": "పుష్యమి"}, {"name": "ఆశ్లేష", "padams": [1, 2, 3, 4], "animal": "పిల్లి", "ganam": "రాక్షస", "nadi": "అంత్య", "raw": "ఆశ్లేష"}, {"name": "మఖ", "padams": [1, 2, 3, 4], "animal": "ఎలుక", "ganam": "రాక్షస", "nadi": "అంత్య", "raw": "మఖ"}, {"name": "పూర్వఫల్గుణి", "padams": [1, 2, 3, 4], "animal": "ఎలుక", "ganam": "మనుష్య", "nadi": "మధ్య", "raw": "పూర్వఫల్గుణి"}, {"name": "ఉత్తర", "padams": [1], "animal": "గోవు", "ganam": "మనుష్య", "nadi": "ఆది", "raw": "ఉత్తర 1"}, {"name": "ఉత్తర", "padams": [2, 3, 4], "animal": "గోవు", "ganam": "మనుష్య", "nadi": "ఆది", "raw": "ఉత్తర 2,3,4"}, {"name": "హస్త", "padams": [1, 2, 3, 4], "animal": "దున్న", "ganam": "దేవ", "nadi": "ఆది", "raw": "హస్త"}, {"name": "చిత్త", "padams": [1, 2], "animal": "పులి", "ganam": "రాక్షస", "nadi": "మధ్య", "raw": "చిత్త 1,2"}, {"name": "చిత్త", "padams": [3, 4], "animal": "పులి", "ganam": "రాక్షస", "nadi": "మధ్య", "raw": "చిత్త 3,4"}, {"name": "స్వాతి", "padams": [1, 2, 3, 4], "animal": "దున్న", "ganam": "దేవ", "nadi": "అంత్య", "raw": "స్వాతి"}, {"name": "విశాఖ", "padams": [1, 2, 3], "animal": "పులి", "ganam": "రాక్షస", "nadi": "అంత్య", "raw": "విశాఖ 1,2,3"}, {"name": "విశాఖ", "padams": [4], "animal": "పులి", "ganam": "రాక్షస", "nadi": "అంత్య", "raw": "విశాఖ  4"}, {"name": "అనూరాధ", "padams": [1, 2, 3, 4], "animal": "లేడి", "ganam": "దేవ", "nadi": "మధ్య", "raw": "అనూరాధ"}, {"name": "జ్యేష్ట", "padams": [1, 2, 3, 4], "animal": "లేడి", "ganam": "రాక్షస", "nadi": "ఆది", "raw": "జ్యేష్ట"}, {"name": "మూల", "padams": [1, 2, 3, 4], "animal": "కుక్క", "ganam": "రాక్షస", "nadi": "ఆది", "raw": "మూల"}, {"name": "పూర్వాఆషాఢ", "padams": [1, 2, 3, 4], "animal": "కోతి", "ganam": "మనుష్య", "nadi": "మధ్య", "raw": "పూర్వాఆషాఢ"}, {"name": "ఉత్తరాషాఢ", "padams": [1], "animal": "ముంగిస", "ganam": "మనుష్య", "nadi": "అంత్య", "raw": "ఉత్తరాషాఢ 1"}, {"name": "ఉత్తరాషాఢ", "padams": [2, 3, 4], "animal": "ముంగిస", "ganam": "మనుష్య", "nadi": "అంత్య", "raw": "ఉత్తరాషాఢ 2,3,4"}, {"name": "శ్రవణము", "padams": [1, 2, 3, 4], "animal": "కోతి", "ganam": "దేవ", "nadi": "అంత్య", "raw": "శ్రవణము"}, {"name": "ధనిష్ట", "padams": [1, 2], "animal": "సింహం", "ganam": "రాక్షస", "nadi": "మధ్య", "raw": "ధనిష్ట 1,2"}, {"name": "ధనిష్ట", "padams": [3, 4], "animal": "సింహం", "ganam": "రాక్షస", "nadi": "మధ్య", "raw": "ధనిష్ట 3,4"}, {"name": "శతభిష", "padams": [1, 2, 3, 4], "animal": "గుర్రం", "ganam": "రాక్షస", "nadi": "ఆది", "raw": "శతభిష"}, {"name": "పూర్వాభద్ర", "padams": [1, 2, 3], "animal": "సింహం", "ganam": "మనుష్య", "nadi": "ఆది", "raw": "పూర్వాభద్ర 1,2,3"}, {"name": "పూర్వాభద్ర", "padams": [4], "animal": "సింహం", "ganam": "మనుష్య", "nadi": "ఆది", "raw": "పూర్వాభద్ర 4"}, {"name": "ఉత్తరాభద్ర", "padams": [1, 2, 3, 4], "animal": "గోవు", "ganam": "మనుష్య", "nadi": "మధ్య", "raw": "ఉత్తరాభద్ర"}, {"name": "రేవతి", "padams": [1, 2, 3, 4], "animal": "ఏనుగు", "ganam": "దేవ", "nadi": "అంత్య", "raw": "రేవతి"}], "matrix": [[28, 33, 28, 18, 21, 22, 26, 17, 18, 22, 31, 27, 21, 26, 17, 11, 9, 13, 22, 26, 22, 19, 26, 15, 13, 27, 24, 26, 24, 21, 21, 15, 16, 14, 24, 26], [34, 28, 29, 19, 22, 15, 18, 26, 26, 30, 23, 24, 21, 19, 28, 21, 19, 6, 14, 29, 22, 19, 17, 19, 20, 20, 27, 28, 26, 10, 10, 20, 24, 22, 16, 28], [27, 27, 28, 17, 9, 15, 19, 20, 21, 25, 26, 23, 17, 21, 22, 15, 15, 18, 27, 15, 19, 16, 20, 26, 24, 19, 14, 15, 10, 25, 25, 27, 19, 17, 19, 11], [18, 18, 19, 28, 19, 25, 16, 17, 18, 22, 23, 20, 19, 23, 24, 21, 21, 23, 22, 10, 14, 21, 25, 31, 20, 13, 9, 14, 10, 23, 29, 31, 23, 20, 22, 14], [23, 23, 10, 19, 28, 36, 27, 23, 23, 27, 26, 13, 12, 26, 28, 25, 26, 20, 19, 15, 9, 16, 30, 24, 14, 20, 11, 17, 18, 20, 26, 24, 30, 27, 26, 19], [22, 13, 15, 27, 34, 28, 20, 25, 23, 26, 19, 22, 21, 17, 25, 23, 27, 13, 10, 25, 17, 23, 22, 25, 15, 11, 18, 21, 24, 13, 19, 27, 29, 26, 17, 27], [27, 18, 21, 18, 25, 20, 28, 33, 31, 19, 10, 15, 24, 20, 28, 30, 34, 21, 14, 27, 19, 14, 11, 13, 23, 18, 24, 20, 25, 12, 13, 21, 23, 27, 17, 27], [19, 27, 21, 18, 24, 26, 34, 28, 25, 13, 20, 13, 23, 29, 22, 24, 24, 27, 20, 27, 20, 13, 17, 4, 16, 27, 27, 22, 22, 17, 18, 11, 16, 19, 27, 27], [19, 26, 22, 19, 23, 24, 32, 24, 28, 16, 23, 16, 22, 27, 21, 23, 24, 25, 18, 27, 21, 13, 20, 5, 13, 26, 27, 27, 23, 17, 18, 11, 17, 19, 27, 28], [21, 28, 23, 20, 24, 25, 19, 10, 14, 28, 35, 28, 15, 20, 14, 18, 18, 20, 20, 27, 20, 19, 26, 10, 8, 20, 21, 28, 27, 21, 12, 7, 11, 17, 25, 25], [30, 21, 26, 23, 24, 17, 10, 18, 21, 35, 28, 30, 18, 14, 23, 26, 27, 12, 11, 26, 21, 20, 19, 22, 17, 11, 22, 26, 25, 13, 4, 14, 18, 24, 18, 27], [25, 23, 22, 19, 12, 21, 13, 12, 15, 28, 28, 28, 15, 15, 17, 20, 20, 26, 25, 11, 16, 15, 20, 26, 22, 16, 8, 12, 13, 27, 18, 18, 12, 18, 20, 12], [21, 21, 17, 18, 11, 19, 22, 22, 21, 16, 18, 16, 28, 30, 26, 16, 16, 22, 25, 11, 17, 24, 26, 34, 24, 21, 11, 5, 4, 18, 24, 25, 18, 17, 18, 12], [27, 19, 21, 22, 25, 17, 20, 28, 27, 22, 16, 16, 30, 28, 34, 24, 22, 8, 11, 25, 19, 26, 24, 24, 19, 19, 27, 21, 18, 4, 11, 19, 24, 23, 16, 24], [18, 27, 22, 23, 27, 25, 28, 21, 21, 16, 25, 18, 26, 34, 28, 18, 16, 14, 17, 26, 17, 24, 32, 19, 10, 27, 28, 22, 20, 11, 18, 12, 16, 15, 26, 24], [13, 21, 16, 21, 25, 23, 30, 23, 23, 19, 28, 21, 17, 25, 19, 28, 25, 24, 16, 25, 16, 18, 27, 13, 15, 28, 29, 26, 25, 16, 16, 10, 14, 18, 29, 27], [11, 20, 16, 21, 26, 26, 33, 23, 23, 19, 28, 21, 17, 22, 17, 26, 28, 27, 19, 36, 17, 19, 26, 12, 14, 26, 27, 23, 24, 19, 19, 7, 14, 19, 27, 27], [13, 6, 19, 25, 20, 12, 19, 26, 24, 20, 12, 26, 23, 9, 15, 24, 27, 28, 20, 19, 26, 28, 11, 25, 28, 13, 21, 17, 19, 18, 18, 24, 18, 22, 11, 21], [22, 15, 28, 23, 20, 12, 13, 20, 18, 20, 12, 26, 25, 10, 17, 17, 20, 21, 28, 27, 34, 24, 7, 21, 28, 13, 21, 25, 27, 26, 20, 26, 20, 15, 4, 13], [27, 29, 17, 12, 16, 27, 27, 26, 26, 28, 28, 15, 13, 25, 25, 25, 27, 21, 28, 28, 20, 10, 23, 18, 23, 26, 18, 22, 23, 27, 21, 20, 25, 19, 20, 13], [22, 22, 20, 15, 10, 18, 19, 21, 21, 22, 21, 19, 17, 19, 18, 17, 18, 27, 34, 18, 28, 18, 17, 21, 28, 21, 13, 17, 17, 32, 26, 26, 22, 16, 13, 5], [16, 16, 14, 19, 14, 22, 13, 14, 14, 19, 18, 15, 21, 23, 21, 18, 19, 28, 23, 8, 17, 28, 27, 31, 23, 17, 9, 12, 12, 27, 27, 26, 22, 21, 18, 9], [24, 14, 19, 24, 27, 20, 11, 16, 21, 26, 18, 21, 24, 20, 29, 26, 27, 12, 7, 22, 17, 28, 28, 31, 16, 14, 22, 25, 26, 12, 12, 22, 24, 24, 18, 27], [12, 18, 24, 29, 22, 22, 13, 3, 6, 10, 20, 26, 31, 23, 16, 13, 12, 25, 20, 17, 20, 31, 30, 28, 15, 17, 17, 20, 20, 25, 25, 18, 11, 9, 21, 21], [12, 20, 24, 19, 13, 14, 21, 15, 12, 8, 17, 24, 25, 19, 9, 13, 13, 27, 27, 21, 27, 24, 26, 16, 28, 27, 25, 15, 15, 21, 25, 21, 11, 17, 25, 27], [27, 20, 19, 13, 20, 12, 18, 26, 26, 23, 13, 17, 21, 19, 27, 27, 26, 11, 11, 26, 19, 18, 18, 19, 27, 28, 34, 24, 23, 8, 15, 22, 29, 32, 23, 32], [25, 27, 14, 8, 11, 18, 24, 26, 26, 23, 24, 9, 11, 27, 28, 28, 27, 20, 20, 19, 12, 11, 25, 19, 25, 34, 28, 18, 15, 15, 22, 22, 28, 31, 32, 23], [28, 29, 16, 14, 17, 22, 20, 22, 22, 27, 28, 13, 6, 22, 23, 26, 25, 17, 24, 23, 16, 14, 28, 22, 16, 25, 19, 28, 25, 25, 17, 17, 23, 30, 32, 23], [27, 26, 13, 10, 17, 26, 23, 21, 23, 28, 26, 15, 17, 18, 20, 23, 25, 18, 25, 23, 16, 14, 28, 23, 17, 25, 15, 24, 28, 30, 20, 18, 23, 32, 31, 24], [20, 10, 26, 23, 20, 12, 8, 17, 17, 22, 13, 28, 18, 5, 12, 16, 18, 16, 24, 26, 30, 28, 14, 28, 21, 9, 16, 25, 21, 28, 18, 23, 21, 26, 15, 22], [20, 11, 26, 30, 27, 19, 10, 19, 19, 14, 5, 20, 25, 11, 19, 17, 21, 18, 19, 22, 25, 28, 12, 26, 29, 16, 13, 18, 21, 20, 28, 33, 28, 18, 7, 14], [15, 21, 28, 32, 25, 25, 18, 10, 10, 7, 15, 20, 26, 20, 13, 11, 8, 26, 26, 19, 26, 26, 21, 19, 22, 23, 23, 18, 18, 25, 33, 28, 19, 9, 17, 16], [18, 25, 20, 24, 31, 31, 24, 17, 17, 13, 20, 14, 19, 25, 17, 15, 17, 18, 19, 28, 21, 21, 27, 12, 15, 30, 29, 24, 25, 20, 27, 19, 28, 18, 23, 20], [14, 21, 16, 19, 26, 26, 25, 18, 18, 18, 25, 18, 16, 22, 14, 16, 18, 19, 12, 20, 14, 21, 27, 11, 15, 31, 30, 28, 30, 25, 17, 7, 16, 28, 33, 30], [24, 15, 18, 21, 25, 17, 16, 25, 27, 26, 19, 20, 17, 15, 25, 27, 26, 9, 3, 19, 12, 19, 20, 22, 24, 22, 31, 29, 29, 14, 6, 16, 21, 33, 28, 34], [25, 24, 11, 14, 17, 26, 25, 24, 25, 24, 27, 13, 12, 22, 22, 24, 26, 20, 13, 11, 5, 12, 27, 22, 27, 30, 21, 19, 22, 22, 14, 16, 18, 29, 33, 28]], "nakEn": {"అశ్విని": "Ashwini", "భరణి": "Bharani", "కృత్తిక": "Krittika", "రోహిణి": "Rohini", "మృగశిర": "Mrigashira", "ఆరుద్ర": "Ardra", "పునర్వసు": "Punarvasu", "పుష్యమి": "Pushyami", "ఆశ్లేష": "Ashlesha", "మఖ": "Magha", "పూర్వఫల్గుణి": "Purva Phalguni", "ఉత్తర": "Uttara Phalguni", "హస్త": "Hasta", "చిత్త": "Chitta (Chitra)", "స్వాతి": "Swati", "విశాఖ": "Vishakha", "అనూరాధ": "Anuradha", "జ్యేష్ట": "Jyeshtha", "మూల": "Moola", "పూర్వాఆషాఢ": "Purvashada", "ఉత్తరాషాఢ": "Uttarashada", "శ్రవణము": "Shravanam", "ధనిష్ట": "Dhanishta", "శతభిష": "Shatabhisham", "పూర్వాభద్ర": "Purvabhadra", "ఉత్తరాభద్ర": "Uttarabhadra", "రేవతి": "Revati"}, "animalEn": {"గుర్రం": "Horse", "ఏనుగు": "Elephant", "మేక": "Goat", "పాము": "Serpent", "కుక్క": "Dog", "పిల్లి": "Cat", "ఎలుక": "Rat", "గోవు": "Cow", "దున్న": "Buffalo", "పులి": "Tiger", "లేడి": "Deer", "కోతి": "Monkey", "ముంగిస": "Mongoose", "సింహం": "Lion"}, "ganamEn": {"దేవ": "Deva", "మనుష్య": "Manushya", "రాక్షస": "Rakshasa"}, "nadiEn": {"ఆది": "Adi", "మధ్య": "Madhya", "అంత్య": "Antya"}};
+const GARBA_DATA = {"ayam": ["1 ధ్వజాయము", "2 ధూమాయము", "3 సింహాయము", "4 శ్వానాయము", "5 వృషభాయము", "6 ఖరాయము", "7 గజాయము", "8 శాకాయము"], "varam": ["1.ఆదివారము", "2. సోమవారము", "3. మంగళవారము", "4. బుధవారము", "5. గురువారము", "6. శుక్రవారము", "7. శనివారము"], "tithi": ["1 పాఢ్యమి", "2 విదియ", "3 తదియ", "4 చవితి", "5 పంచమి", "6 షష్ఠి", "7 సప్తమి", "8 అష్టమి", "9 నవమి", "10 దశమి", "11 ఏకాదశి", "12 ద్వాదశి", "13 త్రయోదశి", "14 చతుర్దశి", "15 అమావాస్య", "16 పాఢ్యమి", "17 విదియ", "18 తదియ", "19 చవితి", "20 పంచమి", "21 షష్ఠి", "22 సప్తమి", "23 అష్టమి", "24 నవమి", "25 దశమి", "26 ఏకాదశి", "27 ద్వాదశి", "28 త్రయోదశి", "29 చతుర్దశి", "30 పౌర్ణమి"], "nakshatra": ["1 అశ్విని", "2 భరణి", "3 కృత్తిక", "4 రోహిణి", "5 మృగశిర", "6 ఆరుద్ర", "7 పునర్వసు", "8 పుష్యమి", "9 ఆశ్లేష", "10 మఖ", "11 పూర్వఫల్గుణి", "12 ఉత్తర", "13 హస్త", "14 చిత్త", "15 స్వాతి", "16 విశాఖ", "17 అనూరాధ", "18 జ్యేష్ట", "19 మూల", "20 పూర్వాఆషాఢ", "21 ఉత్తరాషాఢ", "22 శ్రవణము", "23 ధనిష్ట", "24 శతభిష", "25 పూర్వాభద్ర", "26 ఉత్తరాభద్ర", "27 రేవతి"], "yogam": ["1) విష్కంభము;", "2) ప్రీతి;", "3) ఆయుష్మాన్;", "4) సౌభాగ్యము;", "5) శోభనము;", "6) అతిగండము;", "7) సుకర్మము;", "8) ధృతి;", "9) శూలము;", "10) గండము;", "11) వృద్ధి;", "12) ధృవము;", "13) వ్యాఘాతము,", "14) హర్షణము;", "15) వజ్రము;", "16) సిద్ధి;", "17) వ్యతీపాత్;", "18) వరియాన్:", "19)పరిఘము;", "20) శివము;", "21) సిద్ధము;", "22) సాధ్యము;", "23) శుభము;", "24) శుభ్రము;", "25) బ్రాహ్మము;", "26) బంద్రము;", "27) వైధృతి."], "dikpati": ["1 ఇంద్ర దిక్పతి", "2 అగ్ని దిక్పతి", "3 యమ దిక్పతి", "4 నైరుతిదిక్పతి", "5 వరుణదిక్పతి", "6 వాయుదిక్పతి", "7 కుబేరదిక్పతి", "8 ఈశాన్యదిక్పతి"], "karanam": ["1 బవ,", "2 బాలువ,", "3 కౌలువ,", "4 తైతుల,", "5 గరజి,", "6 వణజి,", "7 భద్రవాన్,"], "amsha": ["1 నష్టాంశ", "2 వృద్ధ్యాంశ", "3 స్త్రీఅంశ", "4 మృత్యు అంశ", "5 దహనాంశ", "6 చోరాంశ", "7 పుత్రాంశ", "8 గోధనాంశ", "9 కీర్తంశ"], "purvakam": [{"sno": 1, "stars": 2, "padam": 9}, {"sno": 2, "stars": 1, "padam": 11}, {"sno": 3, "stars": 2, "padam": 21}, {"sno": 4, "stars": 2, "padam": 39}, {"sno": 5, "stars": 1, "padam": 51}, {"sno": 6, "stars": 2, "padam": 63}, {"sno": 7, "stars": 2, "padam": 87}, {"sno": 8, "stars": 1, "padam": 89}, {"sno": 9, "stars": 2, "padam": 93}, {"sno": 10, "stars": 1, "padam": 117}, {"sno": 11, "stars": 2, "padam": 129}, {"sno": 12, "stars": 1, "padam": 131}, {"sno": 13, "stars": 2, "padam": 141}, {"sno": 14, "stars": 1, "padam": 159}, {"sno": 15, "stars": 2, "padam": 171}, {"sno": 16, "stars": 2, "padam": 183}, {"sno": 17, "stars": 2, "padam": 207}, {"sno": 18, "stars": 2, "padam": 209}, {"sno": 19, "stars": 2, "padam": 213}, {"sno": 20, "stars": 2, "padam": 237}, {"sno": 21, "stars": 2, "padam": 249}, {"sno": 22, "stars": 1, "padam": 251}, {"sno": 23, "stars": 2, "padam": 261}, {"sno": 24, "stars": 2, "padam": 279}, {"sno": 25, "stars": 1, "padam": 291}, {"sno": 26, "stars": 2, "padam": 303}, {"sno": 27, "stars": 1, "padam": 327}, {"sno": 28, "stars": 2, "padam": 329}, {"sno": 29, "stars": 2, "padam": 333}, {"sno": 30, "stars": 2, "padam": 357}, {"sno": 31, "stars": 1, "padam": 369}, {"sno": 32, "stars": 1, "padam": 371}, {"sno": 33, "stars": 2, "padam": 381}, {"sno": 34, "stars": 1, "padam": 399}, {"sno": 35, "stars": 1, "padam": 411}, {"sno": 36, "stars": 2, "padam": 423}, {"sno": 38, "stars": 2, "padam": 447}, {"sno": 39, "stars": 2, "padam": 449}, {"sno": 40, "stars": 1, "padam": 453}, {"sno": 41, "stars": 1, "padam": 477}, {"sno": 42, "stars": 2, "padam": 489}, {"sno": 43, "stars": 1, "padam": 491}, {"sno": 44, "stars": 2, "padam": 501}, {"sno": 45, "stars": 2, "padam": 519}, {"sno": 46, "stars": 1, "padam": 531}, {"sno": 47, "stars": 2, "padam": 543}, {"sno": 48, "stars": 2, "padam": 567}, {"sno": 49, "stars": 2, "padam": 569}, {"sno": 50, "stars": 2, "padam": 573}, {"sno": 51, "stars": 2, "padam": 597}, {"sno": 52, "stars": 2, "padam": 609}, {"sno": 53, "stars": 1, "padam": 611}, {"sno": 54, "stars": 1, "padam": 621}, {"sno": 55, "stars": 2, "padam": 639}, {"sno": 56, "stars": 1, "padam": 651}, {"sno": 57, "stars": 1, "padam": 663}, {"sno": 58, "stars": 2, "padam": 687}, {"sno": 59, "stars": 1, "padam": 689}, {"sno": 60, "stars": 2, "padam": 693}, {"sno": 61, "stars": 2, "padam": 717}, {"sno": 62, "stars": 2, "padam": 729}, {"sno": 63, "stars": 1, "padam": 731}, {"sno": 64, "stars": 1, "padam": 741}, {"sno": 65, "stars": 1, "padam": 759}, {"sno": 66, "stars": 1, "padam": 771}, {"sno": 67, "stars": 2, "padam": 783}, {"sno": 68, "stars": 2, "padam": 807}, {"sno": 69, "stars": 1, "padam": 809}, {"sno": 70, "stars": 2, "padam": 813}, {"sno": 71, "stars": 0, "padam": 821}, {"sno": 72, "stars": 2, "padam": 837}, {"sno": 73, "stars": 2, "padam": 849}, {"sno": 74, "stars": 1, "padam": 851}, {"sno": 75, "stars": 2, "padam": 861}, {"sno": 76, "stars": 2, "padam": 879}, {"sno": 77, "stars": 1, "padam": 891}, {"sno": 78, "stars": 0, "padam": 893}, {"sno": 79, "stars": 2, "padam": 903}, {"sno": 80, "stars": 2, "padam": 927}, {"sno": 81, "stars": 1, "padam": 929}, {"sno": 82, "stars": 1, "padam": 933}, {"sno": 83, "stars": 0, "padam": 945}, {"sno": 84, "stars": 1, "padam": 957}, {"sno": 85, "stars": 1, "padam": 969}, {"sno": 86, "stars": 1, "padam": 971}, {"sno": 87, "stars": 2, "padam": 981}, {"sno": 88, "stars": 1, "padam": 999}, {"sno": 89, "stars": 1, "padam": 1011}, {"sno": 90, "stars": 2, "padam": 1023}], "binanakam": [{"sno": 1, "n": 89, "d": 4}, {"sno": 2, "n": 49, "d": 2}, {"sno": 3, "n": 203, "d": 8}, {"sno": 4, "n": 1532, "d": 61}, {"sno": 5, "n": 137, "d": 4}, {"sno": 6, "n": 547, "d": 16}, {"sno": 7, "n": 139, "d": 4}, {"sno": 8, "n": 395, "d": 8}, {"sno": 9, "n": 791, "d": 16}, {"sno": 10, "n": 203, "d": 4}, {"sno": 11, "n": 411, "d": 8}, {"sno": 12, "n": 823, "d": 16}, {"sno": 13, "n": 729, "d": 14}, {"sno": 14, "n": 211, "d": 4}, {"sno": 15, "n": 105, "d": 2}, {"sno": 16, "n": 491, "d": 8}, {"sno": 17, "n": 251, "d": 4}, {"sno": 18, "n": 129, "d": 2}, {"sno": 19, "n": 299, "d": 4}, {"sno": 20, "n": 305, "d": 4}, {"sno": 21, "n": 1219, "d": 16}, {"sno": 22, "n": 177, "d": 2}, {"sno": 23, "n": 355, "d": 4}, {"sno": 24, "n": 765, "d": 16}, {"sno": 25, "n": 833, "d": 16}, {"sno": 26, "n": 527, "d": 8}, {"sno": 27, "n": 495, "d": 8}, {"sno": 28, "n": 283, "d": 8}, {"sno": 29, "n": 209, "d": 4}, {"sno": 30, "n": 1007, "d": 16}, {"sno": 31, "n": 155, "d": 4}, {"sno": 32, "n": 105, "d": 2}, {"sno": 33, "n": 305, "d": 4}, {"sno": 34, "n": 105, "d": 2}, {"sno": 35, "n": 297, "d": 8}, {"sno": 36, "n": 825, "d": 8}, {"sno": 37, "n": 989, "d": 16}, {"sno": 38, "n": 299, "d": 4}, {"sno": 39, "n": 1817, "d": 16}, {"sno": 40, "n": 105, "d": 2}, {"sno": 41, "n": 177, "d": 2}, {"sno": 42, "n": 129, "d": 2}, {"sno": 43, "n": 201, "d": 2}, {"sno": 44, "n": 213, "d": 2}, {"sno": 45, "n": 129, "d": 2}, {"sno": 46, "n": 1007, "d": 16}, {"sno": 47, "n": 1031, "d": 16}, {"sno": 48, "n": 527, "d": 8}, {"sno": 49, "n": 6181, "d": 82}, {"sno": 50, "n": 1195, "d": 16}, {"sno": 51, "n": 1433, "d": 16}, {"sno": 52, "n": 2219, "d": 24}, {"sno": 53, "n": 1653, "d": 16}, {"sno": 54, "n": 8457, "d": 82}, {"sno": 55, "n": 213, "d": 2}, {"sno": 56, "n": 3349, "d": 28}, {"sno": 57, "n": 261, "d": 2}, {"sno": 58, "n": 2063, "d": 16}, {"sno": 59, "n": 10567, "d": 82}, {"sno": 60, "n": 5733, "d": 44}, {"sno": 61, "n": 2133, "d": 16}, {"sno": 62, "n": 2037, "d": 16}, {"sno": 63, "n": 2255, "d": 16}, {"sno": 64, "n": 2275, "d": 16}, {"sno": 65, "n": 1245, "d": 8}, {"sno": 66, "n": 1485, "d": 8}, {"sno": 67, "n": 2475, "d": 16}, {"sno": 68, "n": 1485, "d": 8}, {"sno": 69, "n": 345, "d": 2}, {"sno": 70, "n": 1449, "d": 8}, {"sno": 71, "n": 441, "d": 2}, {"sno": 72, "n": 1775, "d": 8}, {"sno": 73, "n": 1785, "d": 8}, {"sno": 74, "n": 3619, "d": 16}, {"sno": 75, "n": 689, "d": 4}, {"sno": 76, "n": 3127, "d": 16}, {"sno": 77, "n": 1485, "d": 8}, {"sno": 78, "n": 1593, "d": 8}, {"sno": 79, "n": 1917, "d": 8}, {"sno": 80, "n": 2025, "d": 8}]};
+
+/* ============ NAVIGATION ============ */
+function goTo(screen){
+  document.getElementById('screenHome').classList.toggle('hidden', screen!=='home');
+  document.getElementById('screenPorutham').classList.toggle('hidden', screen!=='porutham');
+  document.getElementById('screenGarba').classList.toggle('hidden', screen!=='garba');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ============ POROTHAM LOGIC ============ */
+const teluguDigits = {1:"౧",2:"౨",3:"౩",4:"౪"};
+function uniqueNakshatraNames(){
+  const seen = []; const set = new Set();
+  POROTHAM_DATA.units.forEach(u=>{ if(!set.has(u.name)){ set.add(u.name); seen.push(u.name);} });
+  return seen;
+}
+function populateNakSelect(sel){
+  const names = uniqueNakshatraNames();
+  sel.innerHTML = names.map(n=>`<option value="${n}">${n} (${POROTHAM_DATA.nakEn[n]||""})</option>`).join("");
+}
+function populatePadaSelect(sel){
+  sel.innerHTML = [1,2,3,4].map(p=>`<option value="${p}">పాదం ${teluguDigits[p]} &middot; Padam ${p}</option>`).join("");
+}
+function findUnit(name, pada){
+  return POROTHAM_DATA.units.find(u => u.name === name && u.padams.includes(Number(pada)));
+}
+function unitIndex(name, pada){
+  return POROTHAM_DATA.units.findIndex(u => u.name === name && u.padams.includes(Number(pada)));
+}
+
+const groomNak = document.getElementById('groomNak');
+const groomPada = document.getElementById('groomPada');
+const brideNak = document.getElementById('brideNak');
+const bridePada = document.getElementById('bridePada');
+
+populateNakSelect(groomNak);
+populateNakSelect(brideNak);
+populatePadaSelect(groomPada);
+populatePadaSelect(bridePada);
+
+const resultBoxP = document.getElementById('result');
+const errorBoxP = document.getElementById('errorBox');
+
+document.getElementById('go').addEventListener('click', ()=>{
+  const gi = unitIndex(groomNak.value, groomPada.value);
+  const bi = unitIndex(brideNak.value, bridePada.value);
+  if(gi === -1 || bi === -1){
+    errorBoxP.textContent = "ఎంపికలో లోపం ఉంది, దయచేసి మళ్ళీ ప్రయత్నించండి. (Selection error, please try again.)";
+    errorBoxP.classList.remove('hidden');
+    resultBoxP.style.display = 'none';
+    return;
+  }
+  errorBoxP.classList.add('hidden');
+  const gUnit = POROTHAM_DATA.units[gi];
+  const bUnit = POROTHAM_DATA.units[bi];
+  const score = POROTHAM_DATA.matrix[bi][gi];
+
+  document.getElementById('rGroomNak').innerHTML = `${gUnit.name} <span class="en">${POROTHAM_DATA.nakEn[gUnit.name]||""} &middot; Padam ${groomPada.value}</span>`;
+  document.getElementById('rGroomAnimal').innerHTML = `${gUnit.animal} <span class="en">${POROTHAM_DATA.animalEn[gUnit.animal]}</span>`;
+  document.getElementById('rGroomGanam').innerHTML = `${gUnit.ganam} <span class="en">${POROTHAM_DATA.ganamEn[gUnit.ganam]}</span>`;
+  document.getElementById('rGroomNadi').innerHTML = `${gUnit.nadi} <span class="en">${POROTHAM_DATA.nadiEn[gUnit.nadi]}</span>`;
+  document.getElementById('rBrideNak').innerHTML = `${bUnit.name} <span class="en">${POROTHAM_DATA.nakEn[bUnit.name]||""} &middot; Padam ${bridePada.value}</span>`;
+  document.getElementById('rBrideAnimal').innerHTML = `${bUnit.animal} <span class="en">${POROTHAM_DATA.animalEn[bUnit.animal]}</span>`;
+  document.getElementById('rBrideGanam').innerHTML = `${bUnit.ganam} <span class="en">${POROTHAM_DATA.ganamEn[bUnit.ganam]}</span>`;
+  document.getElementById('rBrideNadi').innerHTML = `${bUnit.nadi} <span class="en">${POROTHAM_DATA.nadiEn[bUnit.nadi]}</span>`;
+
+  document.getElementById('scoreNum').textContent = score;
+  const ring = document.getElementById('ringFg');
+  const circumference = 2 * Math.PI * 58;
+  const frac = Math.max(0, Math.min(36, score)) / 36;
+  ring.setAttribute('stroke-dasharray', circumference.toFixed(1));
+  ring.style.strokeDashoffset = circumference.toFixed(1);
+  resultBoxP.style.display = 'block';
+  requestAnimationFrame(()=>{ ring.style.strokeDashoffset = (circumference * (1 - frac)).toFixed(1); });
+  resultBoxP.scrollIntoView({behavior:'smooth', block:'nearest'});
+});
+
+/* ============ GARBA LOGIC ============ */
+let currentMode = null;
+let currentEntry = null;
+
+function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ [a,b]=[b, a%b]; } return a||1; }
+class Frac{
+  constructor(n,d=1){
+    if(d<0){ n=-n; d=-d; }
+    const g = gcd(n,d) || 1;
+    this.n = n/g; this.d = d/g;
+  }
+  mulInt(k){ return new Frac(this.n*k, this.d); }
+  sub(o){ return new Frac(this.n*o.d - o.n*this.d, this.d*o.d); }
+  toFloat(){ return this.n/this.d; }
+}
+function fracMod(f, divisor, zeroRule){
+  const q = Math.floor(f.n / (f.d * divisor));
+  let rem = new Frac(f.n - divisor*q*f.d, f.d);
+  if(rem.n === 0){
+    return zeroRule === 'bump' ? new Frac(divisor,1) : new Frac(0,1);
+  }
+  return rem;
+}
+function fracToMixedString(f){
+  const whole = Math.floor(f.n/f.d);
+  const remN = f.n - whole*f.d;
+  if(remN === 0) return String(whole);
+  return whole>0 ? `${whole} ${remN}/${f.d}` : `${remN}/${f.d}`;
+}
+function stripPrefix(s){
+  return s.replace(/^\s*\d+\s*[\.\)]?\s*/, '').replace(/[;,\.]+\s*$/,'').trim();
+}
+function lookup(list, remainderInt, divisor){
+  const idx = remainderInt !== 0 ? remainderInt : divisor;
+  return stripPrefix(list[idx-1]);
+}
+function computePurvakam(padam){
+  const mod = (mult, div) => {
+    const r = ((padam*mult) % div + div) % div;
+    return r === 0 ? div : r;
+  };
+  const dhanam = mod(8,12);
+  const runam = mod(3,8);
+  const labham = dhanam - runam;
+  const adugulu = padam*9;
+  const vayasu = mod(9,120);
+  return {
+    dhanam: String(dhanam), runam: String(runam), labham: String(labham), adugulu: String(adugulu),
+    vayasu: String(vayasu),
+    ayam: lookup(GARBA_DATA.ayam, mod(9,8), 8),
+    varam: lookup(GARBA_DATA.varam, mod(9,7), 7),
+    tithi: lookup(GARBA_DATA.tithi, mod(6,30), 30),
+    nakshatra: lookup(GARBA_DATA.nakshatra, mod(8,27), 27),
+    dikpati: lookup(GARBA_DATA.dikpati, mod(9,8), 8),
+    amsha: lookup(GARBA_DATA.amsha, mod(6,9), 9),
+    yogam: lookup(GARBA_DATA.yogam, mod(4,27), 27),
+    karanam: lookup(GARBA_DATA.karanam, mod(5,7), 7),
+  };
+}
+function computeBinanakam(padam){
+  const m = (mult,div) => fracMod(padam.mulInt(mult), div, 'zero');
+  const dhanamF = m(8,12);
+  const runamF = m(3,8);
+  const labhamF = dhanamF.sub(runamF);
+  const adugulu = padam.mulInt(9);
+  return {
+    padam: fracToMixedString(padam),
+    dhanam: fracToMixedString(dhanamF), runam: fracToMixedString(runamF),
+    labham: fracToMixedString(labhamF), adugulu: fracToMixedString(adugulu),
+    vayasu: fracToMixedString(m(9,120)), ayam: fracToMixedString(m(9,8)),
+    varam: fracToMixedString(m(9,7)), tithi: fracToMixedString(m(6,30)),
+    nakshatra: fracToMixedString(m(8,27)), dikpati: fracToMixedString(m(9,8)),
+    amsha: fracToMixedString(m(6,9)), yogam: fracToMixedString(m(4,27)),
+    karanam: fracToMixedString(m(5,7)),
+  };
+}
+
+const RESULT_FIELDS = [
+  ['dhanam','ధనము'], ['runam','ఋణము'], ['labham','లాభం'],
+  ['ayam','ఆయము'], ['vayasu','వయస్సు'], ['adugulu','అడుగులు'],
+  ['varam','వారము'], ['tithi','తిథి'], ['nakshatra','నక్షత్రము'],
+  ['yogam','యోగము'], ['dikpati','దిక్పతి'], ['amsha','అంశ'],
+  ['karanam','కరణము'],
+];
+
+function selectMode(mode){
+  currentMode = mode;
+  currentEntry = null;
+  document.getElementById('btnPurvakam').classList.toggle('active', mode==='purvakam');
+  document.getElementById('btnBinanakam').classList.toggle('active', mode==='binanakam');
+  document.getElementById('resultGarba').style.display = 'none';
+
+  const pickerTitle = document.getElementById('pickerTitle');
+  pickerTitle.innerHTML = mode==='purvakam'
+    ? 'పదము ఎంచుకోండి (పూర్వకం)<span class="en">Select Padam (Purvakam)</span>'
+    : 'పదము ఎంచుకోండి (బైనాంకం)<span class="en">Select Padam (Binanakam)</span>';
+
+  document.getElementById('pickerCard').classList.add('show');
+  document.getElementById('searchBox').value = '';
+  document.getElementById('manualInput').value = '';
+  renderList('');
+  document.getElementById('searchBox').focus();
+}
+
+function starString(n){ return '\u2605'.repeat(n); }
+
+function renderList(filterText){
+  const listEl = document.getElementById('pickerList');
+  const items = currentMode==='purvakam' ? GARBA_DATA.purvakam : GARBA_DATA.binanakam;
+  const filtered = filterText ? items.filter(it => String(it.padam !== undefined ? it.padam : it.n+'/'+it.d).includes(filterText) || String(it.sno).includes(filterText)) : items;
+  if(filtered.length===0){
+    listEl.innerHTML = '<div class="picker-empty">ఫలితాలు లేవు &middot; No matches</div>';
+    return;
+  }
+  listEl.innerHTML = filtered.map(it => {
+    let padDisplay;
+    if(currentMode==='purvakam'){
+      padDisplay = it.padam + (it.stars ? ' ' + starString(it.stars) : '');
+    } else {
+      padDisplay = fracToMixedString(new Frac(it.n, it.d));
+    }
+    const isSel = currentEntry && currentEntry.sno === it.sno;
+    return `<div class="picker-item${isSel?' selected':''}" data-sno="${it.sno}">${padDisplay}</div>`;
+  }).join('');
+
+  listEl.querySelectorAll('.picker-item').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const sno = Number(el.getAttribute('data-sno'));
+      const items2 = currentMode==='purvakam' ? GARBA_DATA.purvakam : GARBA_DATA.binanakam;
+      currentEntry = items2.find(x=>x.sno===sno);
+      renderList(document.getElementById('searchBox').value.trim());
+      showResult();
+    });
+  });
+}
+
+document.getElementById('searchBox').addEventListener('input', (e)=>{ renderList(e.target.value.trim()); });
+
+function parseDecimalToFraction(str){
+  str = str.trim();
+  // mixed number: "22 1/4"
+  let m = str.match(/^(\d+)\s+(\d+)\/(\d+)$/);
+  if(m){ const whole=+m[1], num=+m[2], den=+m[3]; return new Frac(whole*den+num, den); }
+  // simple fraction: "1/4"
+  m = str.match(/^(\d+)\/(\d+)$/);
+  if(m){ return new Frac(+m[1], +m[2]); }
+  // decimal: "22.25" or integer "22"
+  m = str.match(/^(\d+)(?:\.(\d+))?$/);
+  if(m){
+    const whole = m[1]; const frac = m[2] || '';
+    if(frac===''){ return new Frac(+whole, 1); }
+    const den = Math.pow(10, frac.length);
+    const num = (+whole)*den + (+frac);
+    return new Frac(num, den);
+  }
+  return null;
+}
+
+function useManualPadam(){
+  const raw = document.getElementById('manualInput').value;
+  if(!currentMode){
+    alert('దయచేసి ముందు పూర్వకం లేదా బైనాంకం ఎంచుకోండి. (Please choose Purvakam or Binanakam first.)');
+    return;
+  }
+  if(currentMode === 'purvakam'){
+    const val = parseInt(raw.trim(), 10);
+    if(isNaN(val) || val <= 0 || String(val) !== raw.trim()){
+      alert('దయచేసి సరైన పూర్ణ సంఖ్యను నమోదు చేయండి. (Please enter a valid whole number.)');
+      return;
+    }
+    currentEntry = {sno: null, padam: val, stars: 0, manual:true};
+  } else {
+    const f = parseDecimalToFraction(raw);
+    if(!f){
+      alert('దయచేసి సరైన సంఖ్యను నమోదు చేయండి (ఉదా: 22.25 లేదా 22 1/4). (Please enter a valid number, e.g. 22.25 or 22 1/4.)');
+      return;
+    }
+    currentEntry = {sno: null, n: f.n, d: f.d, manual:true};
+  }
+  showResult();
+}
+
+function showResult(){
+  if(!currentEntry) return;
+  let results, padDisplay, subtitleTe;
+  if(currentMode==='purvakam'){
+    results = computePurvakam(currentEntry.padam);
+    padDisplay = currentEntry.padam + (currentEntry.stars ? ' ' + starString(currentEntry.stars) : '');
+    subtitleTe = currentEntry.manual ? 'పూర్వక గణితం ఫలితాలు (స్వంత నమోదు)' : 'పూర్వక గణితం ఫలితాలు';
+  } else {
+    const padFrac = new Frac(currentEntry.n, currentEntry.d);
+    results = computeBinanakam(padFrac);
+    padDisplay = results.padam;
+    subtitleTe = currentEntry.manual ? 'బైనాంక గణితం ఫలితాలు (స్వంత నమోదు)' : 'బైనాంక గణితం ఫలితాలు';
+  }
+  document.getElementById('resultTitle').innerHTML = `క్షేత్ర పదము ${padDisplay}`;
+  document.getElementById('resultSubtitle').textContent = subtitleTe;
+
+  const grid = document.getElementById('resultGrid');
+  grid.innerHTML = RESULT_FIELDS.map(([key,te])=>{
+    return `<div class="result-row"><div class="label">${te}</div><div class="value">${results[key]}</div></div>`;
+  }).join('');
+
+  const resultBoxG = document.getElementById('resultGarba');
+  resultBoxG.classList.remove('hidden');
+  resultBoxG.style.display = 'block';
+  resultBoxG.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW registration failed:', err));
+  });
+}
+</script>
+</body>
+</html>

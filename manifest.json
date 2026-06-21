@@ -1,0 +1,38 @@
+{
+  "name": "శ్రీ మంజీర జ్యోతిష్యాలయం",
+  "short_name": "మంజీర జ్యోతిష్యం",
+  "description": "Nakshatra Porutham & Garba Ganitham tools - Sri Manjeera Jyothishyalayam, Pithapuram",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF3E6",
+  "theme_color": "#7C2D3B",
+  "lang": "te",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
